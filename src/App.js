@@ -13,13 +13,14 @@ function App() {
   ]
   return (
     <div className="container">
+      <h1>Admin panel</h1>
       <div className="row">
         <div className="col-md-4">
           <Sidebar />
         </div>
         <div className="col-md-8">
           {/* <CRUD /> */}
-          <PostList posts={posts} />
+          {/* <PostList posts={posts} /> */}
           <Form />
         </div>
       </div>
