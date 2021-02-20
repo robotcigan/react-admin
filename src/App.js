@@ -1,6 +1,7 @@
 // import './App.css';
 import React from 'react'
 import CRUD from './CRUD/CRUD'
+import AddPost from './CRUD/AddPost'
 import PostList from './Posts/PostList'
 import Form from './Forms/FormTest'
 import Sidebar from './Sidebar/Sidebar'
@@ -14,16 +15,19 @@ function App() {
   return (
     <div className="container">
       <h1>Admin panel</h1>
-      <div className="row">
+      <AddPost />
+      <PostList />
+      {/* <div className="row">
         <div className="col-md-4">
           <Sidebar />
         </div>
         <div className="col-md-8">
-          {/* <CRUD /> */}
-          {/* <PostList posts={posts} /> */}
+          <CRUD />
+          <PostList posts={posts} />
+          <PostList />
           <Form />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
