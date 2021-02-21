@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Card, CardDeck } from 'react-bootstrap';
+// import { Card, CardDeck } from 'react-bootstrap';
 
 import Post from './Post';
 
@@ -22,14 +22,12 @@ export default class PostList extends React.Component {
 
   render() {
     return (
-      <div>
-        <CardDeck>
-          { this.state.somePosts.map((post, index) => {
-            return (
-              <Post post={post} key={post._id} index={index} />
-            )
-          }) }
-        </CardDeck>
+      <div className="row">
+        { this.state.somePosts.map((post, index) => {
+          return (
+            <Post post={post} key={post._id} index={index} />
+          )
+        }) }
       </div>
     )
   }
