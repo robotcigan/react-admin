@@ -1,23 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import config from '../config';
 // import { Card, CardDeck } from 'react-bootstrap';
 
 import Post from './Post';
 
 
 export default class PostList extends React.Component {
-  state = {
-    test: 'test state',
-    somePosts: []
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      somePosts: []
+    }
+  }
 
   componentDidMount() {
-    axios.get('http://localhost:1337/api/v1/contests')
+    axios.get(`${config.server}/contests`)
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.setState({ somePosts: res.data })
       })
+      .catch(err => console.log(err))
   }
 
   render() {

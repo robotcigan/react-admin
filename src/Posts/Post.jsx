@@ -8,11 +8,15 @@ function Post({ post, index }) {
   return (
     <div className="col-md-4 mb-4">
       <Card>
-        <Card.Img variant="top" src={config.imgStorage + post.thumbnail} />
+        {post.thumbnail
+          ? <Card.Img variant="top" src={config.imgStorage + post.thumbnail} />
+          : ''
+        }
         <Card.Body>
           <Card.Title>{post.title}</Card.Title>
           <Card.Text>{post.text}</Card.Text>
-          <Card.Link href={`/post/${post._id}`}>Перейти</Card.Link>
+          {/* <Card.Link href={`/post/${post._id}`}>Перейти</Card.Link> */}
+          <Link className="card-link" to={`/post/${post._id}`}>Перейти</Link>
         </Card.Body>
       </Card>
     </div>
