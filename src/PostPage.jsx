@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Figure } from 'react-bootstrap';
 import axios from 'axios';
 import config from './config';
+import { Link } from 'react-router-dom';
 
 
 export default class PostPage extends React.Component {
@@ -45,7 +46,11 @@ export default class PostPage extends React.Component {
               <Figure.Image src={config.imgStorage + this.state.post.thumbnail} />
             </Figure>
             <p>{this.state.post.text}</p>
-            <Button variant="danger" onClick={this.removePost}>Удалить пост</Button>
+            <div className="buttons">
+              {/* <Button variant="primary">Изменить пост</Button> */}
+              <Link className="btn btn-primary" to={`/edit-post/${this.state.postId}`}>Изменить пост</Link>
+              <Button variant="danger" onClick={this.removePost}>Удалить пост</Button>
+            </div>
           </div>
         </div>
       </div>

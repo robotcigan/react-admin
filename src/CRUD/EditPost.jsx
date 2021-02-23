@@ -7,13 +7,29 @@ export default class AddPost extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      postId: props.params,
+      post: {},
       title: '',
-      text: '',
-      successAlert: false
+      text: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+
+  componentDidMount() {
+    axios.get(`${config.server}/contest/${this.state.postId}`)
+      .then(res => {
+        let resPost = res.data['contest'];
+        console.log(resPost)
+        this.setState({
+          post: resPost,
+          title: resPost.title,
+          text: resPost.text
+        })
+      })
+      .catch(err => console.log(err))
   }
 
   handleChange(event) {
@@ -27,14 +43,12 @@ export default class AddPost extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    axios.post(`${config.server}/save-contest`, this.state)
+    axios.put(`${config.server}/edit-contest/${this.state.postId}`, this.state)
       .then(res => {
         console.log(res);
-        this.setState({successAlert: true});
       })
       .catch(err => console.log(err))
   }
-
 
   render() {
     return (
@@ -57,7 +71,7 @@ export default class AddPost extends React.Component {
               onChange={this.handleChange}
               rows={3} />
           </Form.Group>
-          <Button as="input" type="submit" value="Сохранить" variant="success" />
+          <Button as="input" type="submit" value="Save"></Button>
         </Form>
         { this.state.successAlert
           ? <Alert variant='success'>Пост успешно создан!</Alert>
