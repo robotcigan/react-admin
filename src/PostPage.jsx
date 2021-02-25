@@ -28,27 +28,39 @@ export default class PostPage extends React.Component {
 
   removePost() {
     let areYouSure = window.confirm('Вы точно хотите удалить?');
-    console.log(this.state.postId)
+    // console.log(this.state.postId)
     if (areYouSure) {
       axios.delete(`${config.server}/remove-contest/${this.state.postId}`)
-        .then(res => console.log('Success removed'))
+        .then(res => {
+          console.log('Success removed')
+          this.props.history.goBack();
+        })
         .catch(err => console.log(err))
     }
   }
 
+  // handleBackHistory() {
+  //   this.props.history.goBack();
+  // }
+
   render() {
     return (
       <div className="container">
+        {/* <Button onClick={this.handleBackHistory}>History back</Button> */}
         <div className="row">
           <div className="col-md-8 mb-4 offset-md-2">
             <h1>{this.state.post.title}</h1>
-            <Figure>
-              <Figure.Image src={config.imgStorage + this.state.post.thumbnail} />
-            </Figure>
+            { this.state.post.thumbnail
+              ?
+              <Figure>
+                <Figure.Image src={config.imgStorage + this.state.post.thumbnail} />
+              </Figure>
+              : ''
+            }
             <p>{this.state.post.text}</p>
             <div className="buttons">
-              {/* <Button variant="primary">Изменить пост</Button> */}
               <Link className="btn btn-primary" to={`/edit-post/${this.state.postId}`}>Изменить пост</Link>
+              {' '}
               <Button variant="danger" onClick={this.removePost}>Удалить пост</Button>
             </div>
           </div>

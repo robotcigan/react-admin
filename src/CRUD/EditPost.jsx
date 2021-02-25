@@ -8,13 +8,15 @@ export default class AddPost extends React.Component {
     super(props);
     this.state = {
       postId: props.params,
-      post: {},
+      // post: {},
+      oldPost: {},
       title: '',
       text: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancelEdit = this.handleCancelEdit.bind(this);
   }
 
 
@@ -22,9 +24,10 @@ export default class AddPost extends React.Component {
     axios.get(`${config.server}/contest/${this.state.postId}`)
       .then(res => {
         let resPost = res.data['contest'];
-        console.log(resPost)
+        // console.log(resPost)
         this.setState({
-          post: resPost,
+          // post: resPost,
+          oldPost: resPost,
           title: resPost.title,
           text: resPost.text
         })
@@ -43,11 +46,26 @@ export default class AddPost extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    axios.put(`${config.server}/edit-contest/${this.state.postId}`, this.state)
-      .then(res => {
-        console.log(res);
+    let areYouSure = window.confirm('Сохранить изменения?');
+    if (areYouSure) {
+      axios.put(`${config.server}/edit-contest/${this.state.postId}`, this.state)
+        .then(res => {
+          console.log(res);
+          this.props.history.goBack();
+        })
+        .catch(err => console.log(err))
+    }
+  }
+
+  handleCancelEdit(event) {
+    event.preventDefault();
+    let areYouSure = window.confirm('Отменить изменения?');
+    if (areYouSure) {
+      this.setState({
+        title: this.state.oldPost.title,
+        text: this.state.oldPost.text
       })
-      .catch(err => console.log(err))
+    }
   }
 
   render() {
@@ -71,7 +89,9 @@ export default class AddPost extends React.Component {
               onChange={this.handleChange}
               rows={3} />
           </Form.Group>
-          <Button as="input" type="submit" value="Save"></Button>
+          <Button as="input" type="submit" variant="success" value="Изменить" />
+          {' '}
+          <Button onClick={this.handleCancelEdit} variant="secondary">Отменить</Button>
         </Form>
         { this.state.successAlert
           ? <Alert variant='success'>Пост успешно создан!</Alert>

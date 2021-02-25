@@ -31,6 +31,10 @@ export default class AddPost extends React.Component {
       .then(res => {
         console.log(res);
         this.setState({successAlert: true});
+        this.setState({
+          title: '',
+          text: ''
+        })
       })
       .catch(err => console.log(err))
   }

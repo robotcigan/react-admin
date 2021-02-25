@@ -3,13 +3,18 @@ import {
   Switch,
   Route,
   Link,
-  useParams
+  Redirect,
+  useParams,
+  useHistory
 } from 'react-router-dom';
+// import { createBrowserHistory } from 'history';
 import Header from './Header';
 import PostList from './Posts/PostList';
 import PostPage from './PostPage';
 import AddPost from './CRUD/AddPost';
 import EditPost from './CRUD/EditPost';
+
+// const history = createBrowserHistory();
 
 export default function MyRouter() {
   return (
@@ -33,6 +38,7 @@ export default function MyRouter() {
         <Route exact path="/create-post">
           <AddPost />
         </Route>
+        <Redirect to="/" />
       </Switch>
     </Router>
   )
@@ -40,14 +46,16 @@ export default function MyRouter() {
 
 function PostPageDetail() {
   let { postId } = useParams();
+  let history = useHistory();
   return (
-    <PostPage params={postId} />
+    <PostPage params={postId} history={history} />
   )
 }
 
 function EditPostPage() {
   let { postId } = useParams();
+  let history = useHistory();
   return (
-    <EditPost params={postId} />
+    <EditPost params={postId} history={history} />
   )
 }
