@@ -24,9 +24,7 @@ export default class AddPost extends React.Component {
     axios.get(`${config.server}/contest/${this.state.postId}`)
       .then(res => {
         let resPost = res.data['contest'];
-        // console.log(resPost)
         this.setState({
-          // post: resPost,
           oldPost: resPost,
           title: resPost.title,
           text: resPost.text

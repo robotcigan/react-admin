@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import config from '../config';
@@ -71,3 +72,4 @@ export default class AddPost extends React.Component {
     )
   }
 }
+
