@@ -13,7 +13,8 @@ export default class PostPage extends React.Component {
     super(props);
     this.state = {
       postId: props.params,
-      post: {}
+      post: {},
+      formatedDateCreated: ''
     }
 
     this.removePost = this.removePost.bind(this);
@@ -22,7 +23,7 @@ export default class PostPage extends React.Component {
   componentDidMount() {
     axios.get(`${config.server}/contest/${this.state.postId}`)
       .then(res => {
-        this.setState({ post: res.data['contest'] })
+        this.setState({ post: res.data['contest'], formatedDateCreated: res.data['formatedDateCreated'] })
       })
       .catch(err => console.log(err))
   }
@@ -53,14 +54,13 @@ export default class PostPage extends React.Component {
             <h1>{this.state.post.title}</h1>
             <p className="text-secondary">
               <Calendar />{' '}
-              <span>Создан {this.state.post.created}</span>
+              {/* <span>Создан {this.state.post.created}</span> */}
+              <span>Создан {this.state.formatedDateCreated}</span>
             </p>
-            { this.state.post.thumbnail
-              ?
+            { this.state.post.thumbnail &&
               <Figure>
                 <Figure.Image src={config.imgStorage + this.state.post.thumbnail} />
               </Figure>
-              : ''
             }
             <p>{this.state.post.text}</p>
             <div className="buttons">

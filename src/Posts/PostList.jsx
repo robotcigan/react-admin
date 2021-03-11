@@ -29,9 +29,7 @@ export default class PostList extends React.Component {
     return (
       <div className="row">
         { this.state.somePosts.map((post, index) => {
-          return (
-            <Post post={post} key={post._id} index={index} />
-          )
+          return <Post post={post} key={post._id} index={index} />
         }) }
       </div>
     )
