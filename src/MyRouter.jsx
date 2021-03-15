@@ -13,6 +13,7 @@ import PostList from './Posts/PostList';
 import PostPage from './PostPage';
 import AddPost from './CRUD/AddPost';
 import EditPost from './CRUD/EditPost';
+import MainPage from './MainPage';
 
 // const history = createBrowserHistory();
 
@@ -22,12 +23,7 @@ export default function MyRouter() {
       <Header />
       <Switch>
         <Route exact path="/">
-          <div className="container">
-            {/* <h1>Home page</h1> */}
-            <div className="row">
-              <PostList />
-            </div>
-          </div>
+          <MainPage />
         </Route>
         <Route path="/post/:postId">
           <PostPageDetail />

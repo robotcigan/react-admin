@@ -30,7 +30,6 @@ export default class PostPage extends React.Component {
 
   removePost() {
     let areYouSure = window.confirm('Вы точно хотите удалить?');
-    // console.log(this.state.postId)
     if (areYouSure) {
       axios.delete(`${config.server}/remove-contest/${this.state.postId}`)
         .then(res => {
@@ -41,21 +40,19 @@ export default class PostPage extends React.Component {
     }
   }
 
-  // handleBackHistory() {
-  //   this.props.history.goBack();
-  // }
-
   render() {
     return (
       <div className="container">
-        {/* <Button onClick={this.handleBackHistory}>History back</Button> */}
         <div className="row">
           <div className="col-md-8 mb-4 offset-md-2">
             <h1>{this.state.post.title}</h1>
             <p className="text-secondary">
               <Calendar />{' '}
-              {/* <span>Создан {this.state.post.created}</span> */}
               <span>Создан {this.state.formatedDateCreated}</span>
+            </p>
+            <p>
+              <span className="text-secondary">Награда: </span>
+              {this.state.post.reward}
             </p>
             { this.state.post.thumbnail &&
               <Figure>

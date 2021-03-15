@@ -19,7 +19,6 @@ export default class PostList extends React.Component {
   componentDidMount() {
     axios.get(`${config.server}/contests`)
       .then(res => {
-        // console.log(res.data)
         this.setState({ somePosts: res.data })
       })
       .catch(err => console.log(err))
@@ -29,7 +28,7 @@ export default class PostList extends React.Component {
     return (
       <div className="row">
         { this.state.somePosts.map((post, index) => {
-          return <Post post={post} key={post._id} index={index} />
+          return <Post post={post} key={post._id} removeMultiple={this.props.removeMultiple} handleRemoveMultiple={this.props.handleRemoveMultiple} />
         }) }
       </div>
     )
