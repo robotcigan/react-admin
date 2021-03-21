@@ -12,23 +12,42 @@ export default class PostList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      somePosts: []
+      postList: []
     }
   }
 
   componentDidMount() {
     axios.get(`${config.server}/contests`)
       .then(res => {
-        this.setState({ somePosts: res.data })
+        this.setState({ postList: res.data })
       })
       .catch(err => console.log(err))
+  }
+
+  // Обновляю postList при удалении нескольких постов
+  static getDerivedStateFromProps(props, state) {
+    if (props.refreshList.length) {
+      let result = state.postList.filter(post => {
+        for (let value of props.refreshList) {
+          if (post._id === value) return false
+        }
+        return true
+      });
+      return { postList: result }
+    } else return null
   }
 
   render() {
     return (
       <div className="row">
-        { this.state.somePosts.map((post, index) => {
-          return <Post post={post} key={post._id} removeMultiple={this.props.removeMultiple} handleRemoveMultiple={this.props.handleRemoveMultiple} />
+        { this.state.postList.map((post, index) => {
+          return (
+            <Post
+              post={post}
+              key={post._id}
+              removeMultiple={this.props.removeMultiple}
+              handleRemoveMultiple={this.props.handleRemoveMultiple} />
+          )
         }) }
       </div>
     )

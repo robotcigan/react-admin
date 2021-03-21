@@ -11,8 +11,9 @@ export default class RemoveMultiplePosts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      removeMultiple: true,
-      removeMultipleArray: []
+      removeMultiple: false,
+      removeMultipleArray: [],
+      refreshList: []
     }
 
     this.handleRemoveMultiple = this.handleRemoveMultiple.bind(this);
@@ -20,27 +21,35 @@ export default class RemoveMultiplePosts extends React.Component {
     this.removePosts = this.removePosts.bind(this);
   }
 
+  // Кнопка удалить
   removeMultipleButton() {
     this.setState({
       removeMultiple: !this.state.removeMultiple
     });
   }
 
+  // Собираем id постов на удаление
   handleRemoveMultiple(postId) {
     if (postId) {
       this.setState({
         removeMultipleArray: [...this.state.removeMultipleArray, postId]
-        });
+      });
     }
   }
 
+  // Отправка на удаление
   removePosts() {
-    axios.post(`${config.server}/remove-contests`, this.state.removeMultipleArray)
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+    let areYouSure = window.confirm('Вы точно хотите удалить?');
+    if (areYouSure) {
+      axios.post(`${config.server}/remove-contests`, this.state.removeMultipleArray)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
+    this.setState({ removeMultiple: false, refreshList: this.state.removeMultipleArray });
   }
 
   render() {
+    let removeMultiple = this.state.removeMultiple;
     return(
       <div className="container">
         <div className="row justify-content-between align-items-center">
@@ -48,21 +57,20 @@ export default class RemoveMultiplePosts extends React.Component {
             <h1 className="mb-4">Посты</h1>
           </div>
           <div className="col-md-4 d-flex justify-content-end">
-            { this.state.removeMultiple === true &&
-              <Button
-                onClick={this.removePosts}
-                variant="danger">
-                Удалить
-              </Button>
+            { removeMultiple === true &&
+              <Button onClick={this.removePosts} variant="danger">Удалить</Button>
             }
             <Button
               onClick={this.removeMultipleButton}
               variant="light">
-              { this.state.removeMultiple === false ? 'Удалить несколько' : 'Отмена' }
+              { removeMultiple === false ? 'Удалить несколько' : 'Отмена' }
             </Button>
           </div>
         </div>
-        <PostList removeMultiple={this.state.removeMultiple} handleRemoveMultiple={this.handleRemoveMultiple} />
+        <PostList
+          refreshList={this.state.refreshList}
+          removeMultiple={removeMultiple}
+          handleRemoveMultiple={this.handleRemoveMultiple} />
       </div>
     )
   }

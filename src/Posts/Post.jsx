@@ -7,7 +7,7 @@ import config from '../config';
 
 function Post({ post, removeMultiple, handleRemoveMultiple }) {
 
-  function handleTest(event) {
+  function removeByChecking(event) {
     if (event.target.checked) {
       handleRemoveMultiple(event.target.attributes.postid.value);
     }
@@ -17,7 +17,7 @@ function Post({ post, removeMultiple, handleRemoveMultiple }) {
     <div className="col-md-4 mb-4">
       <Card>
         { removeMultiple === true &&
-          <Form.Check postid={post._id} onChange={handleTest} type="checkbox" label="Выбрать" />
+          <Form.Check postid={post._id} onChange={removeByChecking} type="checkbox" label="Выбрать" />
         }
         { post.thumbnail &&
           <Card.Img variant="top" src={config.imgStorage + post.thumbnail} />
