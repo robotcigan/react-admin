@@ -70,6 +70,13 @@ export default class RemoveMultiplePosts extends React.Component {
         <PostList
           refreshList={this.state.refreshList}
           removeMultiple={removeMultiple}
+          finished={false}
+          handleRemoveMultiple={this.handleRemoveMultiple} />
+        <h2>Закончились</h2>
+        <PostList
+          refreshList={this.state.refreshList}
+          removeMultiple={removeMultiple}
+          finished={true}
           handleRemoveMultiple={this.handleRemoveMultiple} />
       </div>
     )

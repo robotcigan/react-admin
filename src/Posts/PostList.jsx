@@ -19,7 +19,13 @@ export default class PostList extends React.Component {
   componentDidMount() {
     axios.get(`${config.server}/contests`)
       .then(res => {
-        this.setState({ postList: res.data })
+        if (this.props.finished) {
+          this.setState({postList: res.data.filter(el => el.finished === true)})
+        } else if (this.props.finished === false) {
+          this.setState({postList: res.data.filter(el => el.finished === false)})
+        } else {
+          this.setState({ postList: res.data })
+        }
       })
       .catch(err => console.log(err))
   }
